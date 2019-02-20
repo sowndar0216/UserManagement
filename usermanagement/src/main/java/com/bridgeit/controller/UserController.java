@@ -20,7 +20,7 @@ import com.bridgeit.model.User;
 import com.bridgeit.sevice.IUserService;
 import com.bridgeit.utility.UserToken;
 
-@RestController
+@RestController  
 @CrossOrigin(origins = {})
 public class UserController {
 
@@ -36,7 +36,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<Response> login(@RequestBody User user, HttpServletResponse response1) throws Exception {
-
+System.out.println(user);
 		UserDto userDto = userService.getUserByEmail(user);
 
 		String token = UserToken.generateToken(userDto.getId());
