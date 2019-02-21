@@ -16,4 +16,10 @@ public interface IUserService {
 
 	UserDto getUserByEmail(User user);
 
+	User verifyUser(UserDto user);
+
+	User checkEmail(String email);
+
+	boolean sendEmail(User user);
+
 }

@@ -1,16 +1,15 @@
 package com.bridgeit.sevice;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.dao.IUserDao;
-import com.bridgeit.dao.UserDaoImpl;
 import com.bridgeit.dto.UserDto;
 import com.bridgeit.model.User;
 import com.bridgeit.utility.UserToken;
+import com.bridgeit.utility.Utility;
 
 @Service
 @Transactional
@@ -60,5 +59,28 @@ public class UserServiceImpl implements IUserService {
 	public UserDto getUserByEmail(User user) {
 
 		return userDao.getUserByEmail(user);
+	}
+
+	@Override
+	public User verifyUser(UserDto userDto) {
+		System.out.println("userService");
+		User user = userDao.getUser(userDto);
+		System.out.println(user);
+
+		return user;
+	}
+
+	@Override
+	public User checkEmail(String email) {
+
+		return userDao.checkemail(email);
+	}
+
+	@Override
+	public boolean sendEmail(User user) {
+		
+		String password=user.getPassword();
+		Utility.emailOtp(user, password);
+		return true;
 	}
 }

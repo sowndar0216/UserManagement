@@ -1,6 +1,8 @@
 package com.bridgeit.dao;
 
 
+import java.util.List;
+
 import com.bridgeit.dto.UserDto;
 import com.bridgeit.model.User;
 
@@ -15,5 +17,11 @@ public interface IUserDao {
 	User getUserById(int id);
 
 	UserDto getUserByEmail(User user);
+
+	User getUser(UserDto user);
+
+	User checkemail(String email);
+
+	String getPassword(User user);
 
 }

@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name="User")
 public class User {
 
 	@Id
@@ -58,7 +58,7 @@ public class User {
 	private String confirm_password;
 	
 	@Column(name="status")
-	private boolean status ;
+	private boolean status;
 	
 	@Column(name="createdStamp")
 	private Date createdStamp;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -54,7 +55,7 @@ public class UserDaoImpl implements IUserDao {
 	@SuppressWarnings("unchecked")
 	public List<User> getUsers() {
 		// TODO Auto-generated method stub
-		return getCurrentSession().createQuery("from User").list();
+		return getCurrentSession().createQuery("from user").list();
 	}
 
 	@Override
@@ -74,6 +75,41 @@ public class UserDaoImpl implements IUserDao {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public User getUser(UserDto userDto) {
+		System.out.println("dao" + userDto.getUserName());
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM User  where userName= :name");
+		query.setParameter("name", userDto.getUserName());
+		System.out.println("user");
+		System.out.println((boolean) query.list().isEmpty());
+		if ((boolean) query.list().isEmpty()) {
+			return null;
+		} else {
+			return (User) query.list().get(0);
+		}
+	}
+
+	@Override
+	public User checkemail(String email) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM User  where email= :email");
+		query.setParameter("email",email );
+		
+		if ((boolean) query.list().isEmpty()) {
+			return null;
+		} else {
+			return (User) query.list().get(0);
+		}	}
+
+	@Override
+	public String getPassword(User user) {
+		
+		
+		
+		
+		
+				return null;
 	}
 
 }
