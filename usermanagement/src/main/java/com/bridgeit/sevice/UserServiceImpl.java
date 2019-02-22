@@ -21,7 +21,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public boolean addNewUser(User user) {
 
+		String password=user.getPassword();
+		Utility.emailOtp(user, password);
+
 		userDao.addNewUer(user);
+		
+		
 		return true;
 	}
 
