@@ -1,9 +1,11 @@
 package com.bridgeit.dao;
 
 
+
 import java.util.List;
 
 import com.bridgeit.dto.UserDto;
+import com.bridgeit.model.LogInTime;
 import com.bridgeit.model.User;
 
 public interface IUserDao {
@@ -22,6 +24,7 @@ public interface IUserDao {
 
 	User checkemail(String email);
 
-	String getPassword(User user);
+	List<LogInTime> getTime(int id);
+
 
 }

@@ -1,5 +1,6 @@
 package com.bridgeit.sevice;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.dao.IUserDao;
 import com.bridgeit.dto.UserDto;
+import com.bridgeit.model.LogInTime;
 import com.bridgeit.model.User;
 import com.bridgeit.utility.UserToken;
 import com.bridgeit.utility.Utility;
@@ -21,12 +23,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public boolean addNewUser(User user) {
 
-		String password=user.getPassword();
+		String password = user.getPassword();
 		Utility.emailOtp(user, password);
 
 		userDao.addNewUer(user);
-		
-		
+
 		return true;
 	}
 
@@ -72,7 +73,11 @@ public class UserServiceImpl implements IUserService {
 		User user = userDao.getUser(userDto);
 		System.out.println(user);
 
-		return user;
+		if(user.getUserName().equals(userDto.getUserName())&&user.getPassword().equals(userDto.getPassword())) {
+		
+		return user;}
+			return null;
+
 	}
 
 	@Override
@@ -83,9 +88,28 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public boolean sendEmail(User user) {
-		
-		String password=user.getPassword();
+
+		String password = user.getPassword();
 		Utility.emailOtp(user, password);
 		return true;
+	}
+
+	@Override
+	public List<LogInTime> getTime(String token) {
+
+		try {
+			int id = UserToken.tokenVerify(token);
+
+			List<LogInTime> logTime=userDao.getTime(id);
+			System.out.println(logTime);
+			
+			return logTime;
+					
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

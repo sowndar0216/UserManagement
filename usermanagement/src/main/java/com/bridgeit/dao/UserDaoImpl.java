@@ -7,11 +7,11 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bridgeit.dto.UserDto;
+import com.bridgeit.model.LogInTime;
 import com.bridgeit.model.User;
 
 @Repository
@@ -49,7 +49,7 @@ public class UserDaoImpl implements IUserDao {
 
 		User user = (User) getCurrentSession().get(User.class, id);
 		System.out.println(user);
-		return null;
+		return user;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -79,10 +79,8 @@ public class UserDaoImpl implements IUserDao {
 
 	@Override
 	public User getUser(UserDto userDto) {
-		System.out.println("dao" + userDto.getUserName());
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM User  where userName= :name");
 		query.setParameter("name", userDto.getUserName());
-		System.out.println("user");
 		System.out.println((boolean) query.list().isEmpty());
 		if ((boolean) query.list().isEmpty()) {
 			return null;
@@ -94,22 +92,23 @@ public class UserDaoImpl implements IUserDao {
 	@Override
 	public User checkemail(String email) {
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM User  where email= :email");
-		query.setParameter("email",email );
-		
+		query.setParameter("email", email);
+
 		if ((boolean) query.list().isEmpty()) {
 			return null;
 		} else {
 			return (User) query.list().get(0);
-		}	}
+		}
+	}
 
 	@Override
-	public String getPassword(User user) {
-		
-		
-		
-		
-		
-				return null;
+	public List<LogInTime> getTime(int id) {
+
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM LogInTime  where userId= :id");
+		query.setParameter("id", id);
+
+		return (List<LogInTime>) query.list();
+
 	}
 
 }

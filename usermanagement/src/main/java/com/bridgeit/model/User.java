@@ -13,7 +13,6 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 @Entity
 @Table(name="User")
@@ -24,13 +23,13 @@ public class User {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "firstName")
+	@Column(name = "first_Name")
 	private String firstName;
 	
-	@Column(name="middleName ")
+	@Column(name="middle_Name ")
 	private String middleName; 
 	
-	@Column(name="lastName")
+	@Column(name="last_Name")
 	private String lastName;
 	
 	@Column(name="gender")
@@ -64,19 +63,24 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
-	@Column(name="confirm_password")
-	private String confirm_password;
+	
 	
 	@Column(name="status")
 	private boolean status;
 	
 	@Column(name="createdStamp")
+	@DateTimeFormat(style = "dd-MM-yyy HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern ="dd-MM-yyyy HH:mm:ss")
 	private Date createdStamp;
 	
 	@Column(name="lastloginStamp")
+	@DateTimeFormat(style = "dd-MM-yyy HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern ="dd-MM-yyyy HH:mm:ss")
 	private Date lastloginStamp;
 	
 	@Column(name="lastupdStamp")
+	@DateTimeFormat(style = "dd-MM-yyy HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern ="dd-MM-yyyy HH:mm:ss")
 	private Date lastupdStamp;
 	
 	@Column(name="role")
@@ -186,13 +190,7 @@ public class User {
 		this.password = password;
 	}
 
-	public String getConfirm_password() {
-		return confirm_password;
-	}
-
-	public void setConfirm_password(String confirm_password) {
-		this.confirm_password = confirm_password;
-	}
+	
 
 	public boolean isStatus() {
 		return status;
@@ -239,7 +237,7 @@ public class User {
 		return "User [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
 				+ ", gender=" + gender + ", Country=" + Country + ", phone=" + phone + ", phone_Ext=" + phone_Ext
 				+ ", date_of_birth=" + date_of_birth + ", email=" + email + ", address=" + address + ", userName="
-				+ userName + ", password=" + password + ", confirm_password=" + confirm_password + ", status=" + status
+				+ userName + ", password=" + password  + ", status=" + status
 				+ ", createdStamp=" + createdStamp + ", lastloginStamp=" + lastloginStamp + ", lastupdStamp="
 				+ lastupdStamp + ", role=" + role + "]";
 	}

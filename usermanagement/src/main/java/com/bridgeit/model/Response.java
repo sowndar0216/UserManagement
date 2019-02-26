@@ -5,8 +5,14 @@ public class Response {
 	private int statusCode;
 	private String message;
 	private Object obj;
+	private String token;
 	
-	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public int getStatusCode() {
 		return statusCode;
 	}
