@@ -26,5 +26,7 @@ public interface IUserDao {
 
 	List<LogInTime> getTime(int id);
 
+	List<User> getUserList();
+
 
 }

@@ -3,6 +3,7 @@ package com.bridgeit.sevice;
 
 import java.util.List;
 
+import com.bridgeit.dto.UserCount;
 import com.bridgeit.dto.UserDto;
 import com.bridgeit.model.LogInTime;
 import com.bridgeit.model.User;
@@ -26,5 +27,7 @@ public interface IUserService {
 	boolean sendEmail(User user);
 
 	List<LogInTime> getTime(String token);
+
+	UserCount getUserCount(String token);
 
 }

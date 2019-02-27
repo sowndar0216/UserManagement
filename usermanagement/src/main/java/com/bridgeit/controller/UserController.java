@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgeit.dto.UserCount;
 import com.bridgeit.dto.UserDto;
 import com.bridgeit.model.LogInTime;
 import com.bridgeit.model.Response;
@@ -40,7 +41,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Response> login(@RequestBody UserDto user, HttpServletResponse response1) throws Exception {
+	public ResponseEntity<Response> login(@RequestBody UserDto user) throws Exception {
 
 		response = new Response();
 
@@ -53,8 +54,8 @@ public class UserController {
 				String token = UserToken.generateToken(check.getId());
 				check.setLastloginStamp(new Date());
 				userService.updapteUser(check);
-				response1.addHeader("jwtTokenxxx", token);
-				System.out.println(token);
+			//	response1.addHeader("jwtTokenxxx", token);
+				//System.out.println(token);
 				response.setToken(token);
 				response.setMessage("admin");
 				return new ResponseEntity<Response>(response, HttpStatus.OK);
@@ -136,6 +137,8 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 
 	}
+	
+	
 
 	@GetMapping(value="/logInTime")
 	public ResponseEntity <List<LogInTime>> getTime(@RequestHeader("token") String token){
@@ -149,5 +152,16 @@ public class UserController {
 		
 	}
 	
-	
+	@GetMapping(value="/getUserCount")
+	public ResponseEntity<UserCount> userCount(@RequestHeader("token") String token){
+		
+		
+		UserCount userCount=userService.getUserCount(token);
+		System.out.println(userCount);
+		
+		return new ResponseEntity<UserCount>(userCount,HttpStatus.OK);
+		
+	}
+
+
 }

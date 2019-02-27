@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.dao.IUserDao;
+import com.bridgeit.dto.UserCount;
 import com.bridgeit.dto.UserDto;
 import com.bridgeit.model.LogInTime;
 import com.bridgeit.model.User;
@@ -73,10 +74,11 @@ public class UserServiceImpl implements IUserService {
 		User user = userDao.getUser(userDto);
 		System.out.println(user);
 
-		if(user.getUserName().equals(userDto.getUserName())&&user.getPassword().equals(userDto.getPassword())) {
-		
-		return user;}
-			return null;
+		if (user.getUserName().equals(userDto.getUserName()) && user.getPassword().equals(userDto.getPassword())) {
+
+			return user;
+		}
+		return null;
 
 	}
 
@@ -100,11 +102,50 @@ public class UserServiceImpl implements IUserService {
 		try {
 			int id = UserToken.tokenVerify(token);
 
-			List<LogInTime> logTime=userDao.getTime(id);
+			List<LogInTime> logTime = userDao.getTime(id);
 			System.out.println(logTime);
-			
+
 			return logTime;
-					
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@Override
+	public UserCount getUserCount(String token) {
+
+		long active = 0;
+		long inactive = 0;
+		try {
+			int id = UserToken.tokenVerify(token);
+			User user = userDao.getUserById(id);
+			System.out.println("sowndar"+user);
+			if (user.getRole().equals("admin")) {
+				System.out.println("list");
+				List<User> userList = userDao.getUserList();
+System.out.println("ll");
+				for (int i = 0; i < userList.size(); i++) {
+					if (userList.get(i).getRole().equals("user")) {
+						if (userList.get(i).isStatus() == false) {
+
+							inactive++;
+						} else {
+							active++;
+						}
+
+					}
+				}
+				UserCount count = new UserCount();
+				count.setActive(active);
+				count.setInactive(inactive);
+
+				return count;
+			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

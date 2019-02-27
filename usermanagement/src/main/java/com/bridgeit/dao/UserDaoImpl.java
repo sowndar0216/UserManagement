@@ -54,8 +54,7 @@ public class UserDaoImpl implements IUserDao {
 
 	@SuppressWarnings("unchecked")
 	public List<User> getUsers() {
-		// TODO Auto-generated method stub
-		return getCurrentSession().createQuery("from user").list();
+		return getCurrentSession().createQuery("from User").list();
 	}
 
 	@Override
@@ -68,7 +67,7 @@ public class UserDaoImpl implements IUserDao {
 				System.out.println(userList.get(i).getId());
 				ModelMapper mapper = new ModelMapper();
 
-				UserDto dto = mapper.map(userList.get(i), UserDto.class);
+				UserDto dto = mapper.map(userList.get(	i), UserDto.class);
 
 				return dto;
 
@@ -110,5 +109,16 @@ public class UserDaoImpl implements IUserDao {
 		return (List<LogInTime>) query.list();
 
 	}
+
+	@Override
+	public List<User> getUserList() {
+
+		
+		return getUsers();
+	}
+	
+	
+	
+	
 
 }
