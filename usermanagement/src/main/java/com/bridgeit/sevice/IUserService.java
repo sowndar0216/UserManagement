@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bridgeit.dto.UserCount;
 import com.bridgeit.dto.UserDto;
+import com.bridgeit.dto.UserList;
 import com.bridgeit.model.LogInTime;
 import com.bridgeit.model.User;
 
@@ -29,5 +30,7 @@ public interface IUserService {
 	List<LogInTime> getTime(String token);
 
 	UserCount getUserCount(String token);
+
+	List<UserList> getAccountList();
 
 }

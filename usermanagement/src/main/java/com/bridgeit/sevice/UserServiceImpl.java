@@ -1,7 +1,9 @@
 package com.bridgeit.sevice;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bridgeit.dao.IUserDao;
 import com.bridgeit.dto.UserCount;
 import com.bridgeit.dto.UserDto;
+import com.bridgeit.dto.UserList;
 import com.bridgeit.model.LogInTime;
 import com.bridgeit.model.User;
 import com.bridgeit.utility.UserToken;
@@ -123,11 +126,11 @@ public class UserServiceImpl implements IUserService {
 		try {
 			int id = UserToken.tokenVerify(token);
 			User user = userDao.getUserById(id);
-			System.out.println("sowndar"+user);
+			System.out.println("sowndar" + user);
 			if (user.getRole().equals("admin")) {
 				System.out.println("list");
 				List<User> userList = userDao.getUserList();
-System.out.println("ll");
+				System.out.println("ll");
 				for (int i = 0; i < userList.size(); i++) {
 					if (userList.get(i).getRole().equals("user")) {
 						if (userList.get(i).isStatus() == false) {
@@ -152,5 +155,19 @@ System.out.println("ll");
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<UserList> getAccountList() {
+
+		List<User> userList = userDao.getUserList();
+		ModelMapper mapper = new ModelMapper();
+		List<UserList> list = new ArrayList<>();
+		for (int i = 0; i < userList.size(); i++) {
+			list.add(mapper.map(userList.get(i), UserList.class));
+
+		}
+		return list;
+
 	}
 }
